@@ -1,10 +1,19 @@
+"""
+This is a example macro set which will be used when discord is the active window
+"""
+
 import keyboard
 
 
-def F13():
-    keyboard.write("CECI EST UN TEST D'ECRITURE DANS DISCORD", delay=0.03)
+def macro_a():
+    keyboard.send("This message is written every times you press A")
+
+
+def macro_b():
+    keyboard.send("You pressed B!")
 
 
 hooks = {
-    "F13": F13
+    "A": macro_a,
+    "B": macro_b
 }
