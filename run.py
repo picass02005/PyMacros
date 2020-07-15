@@ -1,7 +1,7 @@
 import ctypes
+import importlib
 import os
 import time
-import importlib
 from ctypes import wintypes
 from threading import Thread
 
@@ -23,6 +23,7 @@ except:
 
 activated = True
 
+hotkeys = {}
 
 def get_active_window_process():
     user32 = ctypes.windll.user32
@@ -38,6 +39,8 @@ def get_active_window_process():
 
 
 def load_hooks(name: str):
+    global hotkeys
+
     hooks_name = "default"
     for i in os.listdir("macros"):
         i = i.split(".py")[0]
@@ -48,10 +51,15 @@ def load_hooks(name: str):
     hooks = importlib.import_module(f"macros.{hooks_name}")
     importlib.reload(hooks)
 
-    keyboard.unhook_all()
+    hotkeys = hooks.hooks
 
-    for i in hooks.hooks.items():
-        keyboard.on_press_key(i[0], lambda _: i[1]())
+
+def press(key):
+    global hotkeys
+
+    for i in hotkeys.items():
+        if key.name == i[0].lower():
+            i[1]()
 
 
 class main_thread(Thread):
@@ -64,11 +72,12 @@ class main_thread(Thread):
     def run(self):
         global activated
         global icon
+        global hotkeys
 
         while True:
             if not activated:
                 self.window = None
-                keyboard.unhook_all()
+                hotkeys = {}
                 time.sleep(ACTUALISATION_TIME_DISABLED)
 
             else:
@@ -101,6 +110,8 @@ def toggle_activated():
 
         print("SCRIPT ENABLED")
 
+
+keyboard.on_press(press)
 
 image = Image.open("images/tray_enabled.png")
 menu = pystray.Menu(item('PyMacro', lambda: None, enabled=False),
