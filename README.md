@@ -4,6 +4,9 @@ By picasso2005
 - # What is it?
 PyMacro is a macro handler written in python. It can have many sets of macro which are switched depending of the active window's title.
 
+- # How can I run the program?
+To run the program, simply navigate to your project's directory with a CMD and do `python run.py` (you can do `pythonw run.py` if you don't want the python's window)
+
 - # How can I add macros?
 To add macro you need to create a python file in `/macros`. The name of this file must correspond with the name of the application linked to this set (exception for default which is loaded by default).
 In this file, you will need to create a dictionary which will be named `hooks`. In this directory, put in the key, the hook assigned to the macro, and at the value a function object which will be the macro.
@@ -25,3 +28,7 @@ You have others exemples in `/macros`
 
 - # What packages can I use to write my macros?
 You can use every packages you want, but I recommend to use keyboard to simulate keyboard inputs or pyautogui (it can do keyboard input too but it can also do mouse events).
+
+- # Advices
+    - Run the script in a virtualenv
+    - Use python 3.8 (I don't try others versions but I think it works)
