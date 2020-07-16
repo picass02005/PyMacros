@@ -25,6 +25,7 @@ activated = True
 
 hotkeys = {}
 
+
 def get_active_window_process():
     user32 = ctypes.windll.user32
 
