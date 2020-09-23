@@ -58,9 +58,16 @@ def load_hooks(name: str):
 def press(key):
     global hotkeys
 
-    for i in hotkeys.items():
+    """for i in hotkeys.items():
         if key.name == i[0].lower():
-            i[1]()
+            i[1]()"""
+
+    for i in hotkeys.items():
+        for j in i[0].lower().split("+"):
+            if not keyboard.is_pressed(j.replace(" ", "")):
+                return
+
+        i[1]()
 
 
 class main_thread(Thread):
