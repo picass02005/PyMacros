@@ -59,11 +59,13 @@ def press(key):
     global hotkeys
 
     for i in hotkeys.items():
+        tmp = True
         for j in i[0].lower().split("+"):
-            if not keyboard.is_pressed(j.replace(" ", "")):
-                return
+            if not keyboard.is_pressed(j.strip()):
+                tmp = False
 
-        i[1]()
+        if tmp:
+            i[1]()
 
 
 class main_thread(Thread):
